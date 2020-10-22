@@ -1,0 +1,24 @@
+{% func Component(name string) %}
+    import React from 'react';
+    import { View } from 'react-native';
+
+    // import { Container } from './styles';
+
+    const {%s name %} = () => {
+    return <View />;
+    }
+
+    export default {%s name %};
+{% endfunc %}
+{% func Screen(name string) %}
+    import React from 'react';
+    import { View } from 'react-native';
+
+    // import { Container } from './styles';
+
+    const {%s name %} = () => {
+    return <View />;
+    }
+
+    export default {%s name %};
+{% endfunc %}
