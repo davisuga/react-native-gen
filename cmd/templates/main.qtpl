@@ -22,3 +22,11 @@
 
     export default {%s name %};
 {% endfunc %}
+{% func Styled(name string) %}
+    import styled from 'styled-components';
+
+    export const Container = styled.View`
+    
+    `
+
+{% endfunc %}

@@ -120,3 +120,51 @@ func Screen(name string) string {
 	return qs422016
 //line cmd/templates/main.qtpl:24
 }
+
+//line cmd/templates/main.qtpl:25
+func StreamStyled(qw422016 *qt422016.Writer, name string) {
+//line cmd/templates/main.qtpl:25
+	qw422016.N().S(`
+    import styled from 'styled-components';
+
+    export const Container = styled.View`)
+//line cmd/templates/main.qtpl:25
+	qw422016.N().S("`")
+//line cmd/templates/main.qtpl:25
+	qw422016.N().S(`
+    
+    `)
+//line cmd/templates/main.qtpl:25
+	qw422016.N().S("`")
+//line cmd/templates/main.qtpl:25
+	qw422016.N().S(`
+
+`)
+//line cmd/templates/main.qtpl:32
+}
+
+//line cmd/templates/main.qtpl:32
+func WriteStyled(qq422016 qtio422016.Writer, name string) {
+//line cmd/templates/main.qtpl:32
+	qw422016 := qt422016.AcquireWriter(qq422016)
+//line cmd/templates/main.qtpl:32
+	StreamStyled(qw422016, name)
+//line cmd/templates/main.qtpl:32
+	qt422016.ReleaseWriter(qw422016)
+//line cmd/templates/main.qtpl:32
+}
+
+//line cmd/templates/main.qtpl:32
+func Styled(name string) string {
+//line cmd/templates/main.qtpl:32
+	qb422016 := qt422016.AcquireByteBuffer()
+//line cmd/templates/main.qtpl:32
+	WriteStyled(qb422016, name)
+//line cmd/templates/main.qtpl:32
+	qs422016 := string(qb422016.B)
+//line cmd/templates/main.qtpl:32
+	qt422016.ReleaseByteBuffer(qb422016)
+//line cmd/templates/main.qtpl:32
+	return qs422016
+//line cmd/templates/main.qtpl:32
+}

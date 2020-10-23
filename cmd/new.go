@@ -21,19 +21,18 @@ import (
 	"github.com/davisuga/rn-gen/cmd/templates"
 	"github.com/spf13/cobra"
 )
+
 var log = fmt.Println
-// newCmd represents the new command
+var format = fmt.Sprintf
+var COMPONENTS_PATH = "./src/components/"
+var SCREENS_PATH = "./src/screens/"
 
 var newCmd = &cobra.Command{
 	Use:   "new",
 	Short: "generate a new file",
 	Long: ``,
-	Run: func(cmd *cobra.Command, args []string) {
-		log("new called")
-		
+	Run: func(cmd *cobra.Command, args []string) {		
 		targetType, targetName := args[0], args[1:]
-
-		
 
 		if targetType == "component"{
 			mapArray(targetName, generateComponent)
@@ -57,25 +56,31 @@ func mapArray(array []string, funcToApply func(string) string) []string {
 	return newArray
 }
 
-func generateComponent(componentName string) string {
-	content := templates.Component(componentName)
-	componentPath := "./src/components/"+componentName
-	os.MkdirAll(componentPath, os.ModePerm)
-	componentFile, _ := os.Create(componentPath+"/index.tsx")
-	fmt.Fprint(componentFile, content)
-	componentFile.Close()
+func generateScreen(screenName string) string {
+	content := templates.Screen(screenName)
+	dumpToFile(SCREENS_PATH, "index.tsx",  content)
+
+	log("generated "+screenName)
 	return content
 }
 
-func generateScreen(screenName, content, style string){
-	screenPath := "./src/screens/"+screenName
-	os.MkdirAll(screenPath, os.ModePerm)
-	screenFile, _ := os.Create(screenPath+"/index.tsx")
-	screenStyleFile, _ := os.Create(screenPath+"/styles.ts")
+func generateComponent(componentName string) string {
+	
+	component := templates.Component(componentName)
+	styles := templates.Styled("")
+	dumpToFile(COMPONENTS_PATH+componentName, "/index.tsx", component)
+	dumpToFile(COMPONENTS_PATH+componentName, "/style.ts", styles)
 
-	fmt.Fprint(screenFile, content)
-	fmt.Fprint(screenStyleFile, style)
-	screenFile.Close()
+	log("generated "+ componentName)
+	return component
+}
+// filePath example: ./src/components/CompA/index.tsx
+func dumpToFile(path, fileName, content string)  {
+	
+	os.MkdirAll(path, os.ModePerm)
+	file, _ := os.Create(path+fileName)
+	fmt.Fprint(file, content)
+	file.Close()
 }
 
 func init() {
